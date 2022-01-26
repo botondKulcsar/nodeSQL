@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken')
 const { SECRET } = require('../util/config')
 
 const { Blog, User } = require('../models')
+const { Op } = require('sequelize')
+const { sequelize } = require('../util/db')
 
 const tokenExtractor = (req, res, next) => {
   const authorization = req.get('authorization')
@@ -28,12 +30,40 @@ const blogFinder = async (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
+  let where = {}
+
+  if (req.query.search) {
+    where = {
+      [Op.or]: [
+        {
+          title: {
+            [Op.iLike]: `%${req.query.search}%`
+          }
+        },
+        {
+          author: {
+            [Op.iLike]: `%${req.query.search}%`
+          }
+        }
+      ]
+    }
+    // where.title = {
+    //   [Op.iLike]: `%${req.query.search}%`
+    // }
+  }
+
   const blogs = await Blog.findAll({
     attributes: { exclude: ['userId'] },
     include: {
       model: User,
       attributes: ['name']
-    }
+    },
+    where,
+    order: sequelize.literal('likes DESC')
+    // order: [
+    //   ['title', 'DESC'],
+    //   ['likes', 'DESC']
+    // ]
   })
 
   return res.status(200).json(blogs)
@@ -65,7 +95,7 @@ router.put('/:id', blogFinder, async (req, res) => {
 
 router.delete('/:id', blogFinder, tokenExtractor, async (req, res) => {
   if (req.decodedToken.id !== req.blog.userId) {
-    return res.status(401).json({error: 'mind your OWN blogs!'})
+    return res.status(401).json({ error: 'mind your OWN blogs!' })
   }
   if (req.blog) {
     await req.blog.destroy()
