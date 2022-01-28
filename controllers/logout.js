@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { tokenExtractor } = require('../util/middlewares.js')
 const Session = require('../models/session')
 
-router.post('/', tokenExtractor, async (req, res) => {
+router.delete('/', tokenExtractor, async (req, res) => {
   const userId = req.decodedToken.id
   const session = await Session.findOne({
     where: {
