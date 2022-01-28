@@ -14,13 +14,11 @@ ReadingLists.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: 'users', key: 'id' }
-      // unique: 'uniqueTag'
     },
     blogId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: 'blogs', key: 'id' }
-      // unique: 'uniqueTag'
     },
     read: {
       type: DataTypes.BOOLEAN,

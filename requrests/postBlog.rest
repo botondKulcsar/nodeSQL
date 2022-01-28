@@ -1,10 +1,10 @@
 POST http://localhost:3005/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imt1bGNzYXJtYWphQGdteC5jb20iLCJpZCI6MywiaWF0IjoxNjQzMzA1MDM3fQ.l5byfMfgLgC8tYgm3w0cidkU36capgWMaGQCfDkkzC8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imt1bGNzYXJtYWphQGdteC5jb20iLCJpZCI6MywiaWF0IjoxNjQzMzczOTYzLCJleHAiOjE2NDMzNzc1NjN9.DnVr7CpAYp9VzGh8CKi6rAsTLO_XI2cvi5NC4ul4_QY
 
 {
-    "title": "BTS",
+    "title": "BTS reloadded",
     "url":"https://www.bts.com",
     "year": 2022,
-    "likes": 1
+    "likes": 12
 }
